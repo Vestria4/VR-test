@@ -3,44 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <title>VR with Joycon Example</title>
+  <title>VR Button Example</title>
+  <style>
+    /* Add some styles for the button */
+    #vrButton {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 10px;
+      background-color: #4285f4;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-  <a-scene>
-    <!-- VR button -->
-    <a-entity
-      id="vrButton"
-      geometry="primitive: plane; width: 2; height: 1"
-      material="color: #4285f4; shader: flat"
-      position="-1 1.5 -3"
-      rotation="-30 0 0"
-      text="value: Enter VR; color: #ffffff; align: center; width: 4"
-      event-set__enter-vr="_event: click; _target: #scene; visible: false">
-    </a-entity>
-
-    <!-- VR scene content -->
-    <a-box position="0 1.5 -5" rotation="0 45 0" color="#4CC3D9"></a-box>
-
-    <!-- Camera with motion controls -->
-    <a-entity id="cameraRig" position="0 1.6 0">
-      <a-entity id="head" camera look-controls></a-entity>
-      <a-entity id="left-controller" oculus-touch-controls="hand: left"></a-entity>
-      <a-entity id="right-controller" oculus-touch-controls="hand: right"></a-entity>
-    </a-entity>
-  </a-scene>
+  <!-- VR button element -->
+  <button id="vrButton">Enter VR</button>
 
   <script>
-    // Hide the VR button when in VR mode
-    document.querySelector('#scene').addEventListener('enter-vr', function () {
-      document.querySelector('#vrButton').setAttribute('visible', false);
-    });
+    // Check if the browser supports the deprecated WebVR API
+    if ('getVRDisplays' in navigator) {
+      // Get the VR button element
+      var vrButton = document.getElementById('vrButton');
 
-    // Show the VR button when exiting VR mode
-    document.querySelector('#scene').addEventListener('exit-vr', function () {
-      document.querySelector('#vrButton').setAttribute('visible', true);
-    });
+      // Add a click event listener to the button
+      vrButton.addEventListener('click', function() {
+        // Request VR displays
+        navigator.getVRDisplays().then(function(displays) {
+          // Check if there is at least one VR display
+          if (displays.length > 0) {
+            // Enter VR mode on the first available display
+            displays[0].requestPresent([{ source: /* your canvas or video element */ }]);
+          } else {
+            // No VR display found
+            alert('No VR displays found.');
+          }
+        });
+      });
+    } else {
+      // Browser doesn't support WebVR API
+      alert('Your browser does not support WebVR.');
+    }
   </script>
 
 </body>
