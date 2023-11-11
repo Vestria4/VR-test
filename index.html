@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   </head>
   <body>
     <a-scene>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+      <!-- Ambient light for overall scene illumination -->
+      <a-light type="ambient" color="#888" intensity="0.65"></a-light>
+
+      <!-- Directional light source for shadows -->
+      <a-light position="-5 5 5" type="directional" target="#ground" intensity="0.2" castShadow="true"></a-light>
+
+      <!-- Ground plane with texture -->
+      <a-plane id="ground" position="0 0 0" rotation="-90 0 0" width="20" height="20" shadow="receive: true" material="src: url(0.png); repeat: 10 10;"></a-plane>
+
+      <!-- Objects casting shadows -->
+      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow="cast: true"></a-box>
+      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow="cast: true"></a-sphere>
+      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D" shadow="cast: true"></a-cylinder>
+
+      <!-- Sky background -->
+      <a-sky color="#ECECEC"></a-sky>
     </a-scene>
   </body>
 </html>
