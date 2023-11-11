@@ -6,13 +6,13 @@
   <body>
     <a-scene>
       <!-- Ambient light for overall scene illumination -->
-      <a-light type="ambient" color="#888" intensity="0.65"></a-light>
+      <a-light type="ambient" color="#888" intensity="0.4"></a-light>
 
       <!-- Directional light source for shadows -->
       <a-light position="-5 5 5" type="directional" target="#ground" intensity="0.2" castShadow="true"></a-light>
 
       <!-- Ground plane with texture -->
-      <a-plane id="ground" position="0 0 0" rotation="-90 0 0" width="20" height="20" shadow="receive: true" material="src: url(0.png); repeat: 10 10;"></a-plane>
+      <a-plane id="ground" position="0 0 0" rotation="-90 0 0" width="20" height="20" shadow="receive: true" material="src: url(0.png); repeat: 5 5;"></a-plane>
 
       <!-- Objects casting shadows -->
       <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow="cast: true"></a-box>
